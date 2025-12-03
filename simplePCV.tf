@@ -17,12 +17,13 @@ resource "pingfederate_password_credential_validator" "simple_pcv" {
           {
             sensitive_fields = [
               { name = "Username", value = "testuser" },
-              { name = "Password", value = "Lms@12345" }, # Change this if you like
-              { name = "Confirm Password", value = "Lms@12345" }
+              { name = "Password", value = "" }, # Change this if you like
+              { name = "Confirm Password", value = "" }
             ]
           }
         ]
       }
     ]
   }
+
 }
