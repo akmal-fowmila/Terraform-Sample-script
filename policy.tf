@@ -58,8 +58,8 @@ resource "pingfederate_authentication_policies" "authenticationPolicies" {
           }
         ]
       }
-      name        = "Simple HTML Form Authentication Policy"
-      description = "Direct authentication using HTML Form IdP Adapter without fragment or selector"
+      name        = var.auth_policy_name
+      description = var.auth_policy_description
       enabled     = true
     }
   ]
@@ -69,3 +69,4 @@ resource "pingfederate_authentication_policies" "authenticationPolicies" {
     pingfederate_authentication_policy_contract.registration
   ]
 }
+
