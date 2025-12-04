@@ -1,3 +1,6 @@
+# variables.tf
+# Declares all input variables for the project.
+
 # --- Provider Connection Variables ---
 variable "pf_host" {
   type        = string
@@ -29,11 +32,13 @@ variable "signing_key_id" {
 variable "connection_id" {
   type        = string
   description = "The unique string ID for this connection."
+  # default     = "my-idp-connection"
 }
 
 variable "connection_name" {
   type        = string
   description = "The display name for this new IdP connection."
+  # default     = "MyNewTerraformSPConnection"
 }
 
 variable "partner_entity_id" {
@@ -63,41 +68,73 @@ variable "adapter_id" {
 variable "adapter_name" {
   type        = string
   description = "The friendly name for the HTML Form Adapter."
+  # default     = "My Terraform HTML Form Adapter"
 }
 
 # --- SP Adapter / OpenToken variables ---
 variable "sp_adapter_id" {
   type        = string
   description = "The ID for the SP OpenToken Adapter."
+  # default     = "myOpenTokenAdapter"
 }
 
 variable "sp_adapter_name" {
   type        = string
   description = "The friendly name for the SP OpenToken Adapter."
+  # default     = "My OpenToken Adapter"
 }
 
 variable "opentoken_sp_adapter_password" {
   type        = string
   description = "Password used in the OpenToken SP Adapter configuration."
   sensitive   = true
+  # default     = "ChangeMe123!"
 }
 
 # ---IdP Connection Variables ---
 variable "sp_idp_connection_name" {
   type        = string
   description = "The display name for the SP-to-IdP connection."
+  # default     = "My SP-to-IdP Connection"
 }
 
 variable "sp_idp_connection_entity_id" {
   type        = string
   description = "The SAML Entity ID for this SP-to-IdP connection."
+  # default     = "my-sp-entity-id"
 }
 
 variable "sp_idp_contact_first_name" {
   type        = string
   description = "Contact first name for the SP-to-IdP connection."
+  # default     = "Admin"
 }
 
+#variable "sp_idp_connection_auth_username" {
+  #type        = string
+ # description = "Username for SP-to-IdP inbound back channel authentication."
+  # default     = "sp-auth-user"
+#}
+
+#variable "sp_idp_connection_auth_password" {
+ # type        = string
+  #description = "Password for SP-to-IdP inbound back channel authentication."
+  #sensitive   = true
+  # default     = "sp-auth-password"
+#}
+
+#variable "sp_idp_sso_service_url" {
+ # type        = string
+  #description = "The SSO service endpoint URL for the SP-to-IdP connection."
+  # default     = "https://sp.example.com/saml/sso"
+#}
+
+# Signing certificate for the IdP (used to verify IdP signatures)
+variable "sp_idp_signing_cert_id" {
+  type        = string
+  description = "Logical ID used for the IdP signing certificate resource in PingFederate."
+  # default     = "azuread-signing-cert"
+}
 
 variable "sp_idp_signing_cert_path" {
   type        = string
@@ -107,6 +144,7 @@ variable "sp_idp_signing_cert_path" {
 variable "sp_idp_signing_cert_subject_dn" {
   type        = string
   description = "Subject DN of an existing PingFederate certificate to use for verification (when cert is in PF)."
+  # default     = "CN=pfx-server.example.com, OU=IT, O=ExampleCorp, C=US"
 }
 
 # --- OAuth Client Variables  ---
@@ -129,6 +167,7 @@ variable "oauth_client_name" {
 variable "oauth_redirect_uris" {
   type        = list(string)
   description = "List of redirect URIs for the OAuth client (e.g., callback endpoints)."
+  # default     = ["https://pingfederate.example.com/oauth/callback"]
 }
 
 variable "oauth_scopes" {
@@ -157,4 +196,26 @@ variable "fragment_internal_id" {
 variable "fragment_first_factor_id" {
   type        = string
   description = "ID for the First Factor fragment."
+}
+
+#---- Policy Contract Variables -----
+variable "policy_contract_id" {
+  type        = string
+  description = "The ID for the Authentication Policy Contract."
+}
+
+variable "policy_contract_name" {
+  type        = string
+  description = "The display name for the Authentication Policy Contract."
+}
+
+#---- Authentication Policy Variables -----
+variable "auth_policy_name" {
+  type        = string
+  description = "The name of the authentication policy."
+}
+
+variable "auth_policy_description" {
+  type        = string
+  description = "The description of the authentication policy."
 }
