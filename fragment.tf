@@ -3,7 +3,9 @@ resource "pingfederate_authentication_policies_fragment" "registration_fragment"
   description = "Sample Registration Fragment"
   fragment_id = "registrationFragment"
 
-  
+  # -------------------------------------------------------------------------
+  # INPUTS & OUTPUTS
+  # -------------------------------------------------------------------------
   inputs = {
     id = pingfederate_authentication_policy_contract.registration.id
   }
@@ -12,7 +14,9 @@ resource "pingfederate_authentication_policies_fragment" "registration_fragment"
     id = pingfederate_authentication_policy_contract.registration.id
   }
 
-  
+  # -------------------------------------------------------------------------
+  # ROOT NODE
+  # -------------------------------------------------------------------------
   root_node = {
     action = {
       authn_source_policy_action = {
@@ -24,6 +28,7 @@ resource "pingfederate_authentication_policies_fragment" "registration_fragment"
           }
         }
         
+        # 2. Map the Incoming Username
         input_user_id_mapping = {
           source = {
             type = "INPUTS"
@@ -35,7 +40,9 @@ resource "pingfederate_authentication_policies_fragment" "registration_fragment"
       }
     }
 
-
+    # -------------------------------------------------------------------------
+    # CHILDREN
+    # -------------------------------------------------------------------------
     children = [
       # CHILD 1: FAIL PATH
       {
@@ -79,40 +86,11 @@ resource "pingfederate_authentication_policies_fragment" "registration_fragment"
                   value = "username"
                 }
 
-                
-                "firstName" = {
-                  source = { type = "TEXT" }
-                  value  = "Unknown"
-                }
-
-                "lastName" = {
-                  source = { type = "TEXT" }
-                  value  = "Unknown"
-                }
-
-                "given_name" = {
-                  source = { type = "TEXT" }
-                  value  = "Unknown"
-                }
-
-                "family_name" = {
-                  source = { type = "TEXT" }
-                  value  = "Unknown"
-                }
+                # --- 2. Text Fills ---
 
                 "email" = {
                    source = { type = "TEXT" }
                    value  = "no-email@example.com"
-                }
-
-                "fullName" = {
-                   source = { type = "TEXT" }
-                   value  = "User"
-                }
-
-                "photo" = {
-                   source = { type = "TEXT" }
-                   value  = "placeholder" 
                 }
               }
             }
