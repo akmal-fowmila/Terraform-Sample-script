@@ -110,30 +110,10 @@ variable "sp_idp_contact_first_name" {
   # default     = "Admin"
 }
 
-#variable "sp_idp_connection_auth_username" {
-  #type        = string
- # description = "Username for SP-to-IdP inbound back channel authentication."
-  # default     = "sp-auth-user"
-#}
-
-#variable "sp_idp_connection_auth_password" {
- # type        = string
-  #description = "Password for SP-to-IdP inbound back channel authentication."
-  #sensitive   = true
-  # default     = "sp-auth-password"
-#}
-
-#variable "sp_idp_sso_service_url" {
- # type        = string
-  #description = "The SSO service endpoint URL for the SP-to-IdP connection."
-  # default     = "https://sp.example.com/saml/sso"
-#}
-
 # Signing certificate for the IdP (used to verify IdP signatures)
 variable "sp_idp_signing_cert_id" {
   type        = string
   description = "Logical ID used for the IdP signing certificate resource in PingFederate."
-  # default     = "azuread-signing-cert"
 }
 
 variable "sp_idp_signing_cert_path" {
@@ -219,3 +199,4 @@ variable "auth_policy_description" {
   type        = string
   description = "The description of the authentication policy."
 }
+
