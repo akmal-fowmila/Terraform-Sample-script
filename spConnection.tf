@@ -7,13 +7,6 @@ resource "pingfederate_idp_sp_connection" "samlSpBrowserSSOExample" {
   base_url           = var.partner_acs_url
   logging_mode       = "STANDARD"
   virtual_entity_ids = []
-
-  extended_properties = {
-    "AuthN_Experience" = {
-      values = ["Registration"]
-    }
-  }
-
   credentials = {
     certs = []
     signing_settings = {
@@ -24,56 +17,62 @@ resource "pingfederate_idp_sp_connection" "samlSpBrowserSSOExample" {
       include_cert_in_signature    = false
       algorithm                    = "SHA256withRSA"
     }
-  }
 
+  }
   sp_browser_sso = {
     protocol                      = "SAML20"
     require_signed_authn_requests = false
     sp_saml_identity_mapping      = "STANDARD"
     sign_assertions               = false
-
-    incoming_bindings = ["POST", "REDIRECT"]
-
-   
-    adapter_mappings = []
-
-    authentication_policy_contract_assertion_mappings = [
+    adapter_mappings = [
       {
-        authentication_policy_contract_ref = {
-          id = pingfederate_authentication_policy_contract.registration.id
+        idp_adapter_ref = {
+          id = var.adapter_id
         }
         attribute_sources = []
         attribute_contract_fulfillment = {
           "SAML_SUBJECT" = {
-            source = { type = "AUTHENTICATION_POLICY_CONTRACT" }
-            value  = "subject"
+            source = {
+              type = "ADAPTER"
+            }
           }
         }
-        issuance_criteria = { conditional_criteria = [] }
+        issuance_criteria = {
+          conditional_criteria = []
+          }
+          attribute_contract_fulfillment = {
+            "SAML_SUBJECT" = {
+              source = {
+                type = "ADAPTER"
+              }
+              value = "username"
+            }
+        }
       }
     ]
-
+    authentication_policy_contract_assertion_mappings = []
     encryption_policy = {
       encrypt_slo_subject_name_id   = false
       encrypt_assertion             = false
       encrypted_attributes          = []
       slo_subject_name_id_encrypted = false
     }
-    
-    enabled_profiles = [ "IDP_INITIATED_SSO", "SP_INITIATED_SSO" ]
+    enabled_profiles = [
+      "IDP_INITIATED_SSO"
+    ]
     sign_response_as_required = true
-    
     sso_service_endpoints = [
       {
         is_default = true
         binding    = "POST"
         index      = 0
-        url        = var.partner_acs_url
+        url        = "https://google.com"
       }
     ]
-    
-    assertion_lifetime = { minutes_after = 5, minutes_before = 5 }
-    
+    assertion_lifetime = {
+      minutes_after  = 5
+      minutes_before = 5
+    }
     attribute_contract = {
       core_attributes = [
         {
